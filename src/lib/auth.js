@@ -2,8 +2,14 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
-const client = new MongoClient(process.env.BETTER_AUTH_DB_URL);
+const client = new MongoClient(process.env.DB_URL);
 const db = client.db();
+
+(async () => {
+  // console.log(db, db.collections());
+  const collections = await db.collections();
+  console.log(collections);
+})();
 
 export const auth = betterAuth({
   emailAndPassword: {
