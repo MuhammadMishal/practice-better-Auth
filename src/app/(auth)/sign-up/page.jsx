@@ -9,7 +9,8 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
+import { github } from "better-auth";
 const SignUpPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,17 @@ const SignUpPage = () => {
       password: data.password,
     });
     console.log(resData, error);
+  };
+  const handleGoogleSignIn = async () => {
+    const rData = await signIn.social({
+      provider: "google",
+    });
+    console.log("after google signIn ", rData);
+  };
+  const handleGithubSignIn = async () => {
+    const gData = await signIn.social({
+      provider: "github",
+    });
   };
   return (
     <div>
@@ -88,6 +100,24 @@ const SignUpPage = () => {
           </Button>
         </div>
       </Form>
+      <p>OR</p>
+      <Button
+        onClick={handleGoogleSignIn}
+        className="bg-white text-black"
+        variant="tertiary"
+      >
+        Sign in with Google
+      </Button>
+      <div>
+        <p>or</p>
+        <Button
+          onClick={handleGithubSignIn}
+          className="bg-white text-black"
+          variant="tertiary"
+        >
+          Sign in with Git hub
+        </Button>
+      </div>
     </div>
   );
 };
